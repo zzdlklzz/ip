@@ -43,14 +43,14 @@ public class Noob {
     /**
      * Greets the user upon bot start up
      */
-    public void greet() {
+    private void greet() {
         System.out.println("Hello! I'm Noob\nWhat can I do for you?");
     }
 
     /**
      * Exits conversation and closes scanner
      */
-    public void exit() {
+    private void exit() {
         System.out.println("Bye. Hope to see you again soon!");
         scanner.close();
     }
