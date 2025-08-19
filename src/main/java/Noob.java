@@ -37,7 +37,27 @@ public class Noob {
                     indentedReply("Please input a valid task number to mark as done");
                 }
             } else if (input.toLowerCase().startsWith("deadline ")) { // Add deadline task
+                try {
+                    String[] parsedInput = input.split(" /by ");
+                    String deadline = parsedInput[1];
+                    String desc = parsedInput[0].split("deadline ")[1];
 
+                    if (desc.isEmpty()) {
+                        indentedReply("Task description cannot be empty");
+                    } else {
+                        addToList(new DeadlineTask(desc, deadline));
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    indentedReply("Please include a deadline for your task by inputting \"/by\"");
+                }
+            } else if (input.toLowerCase().startsWith("todo ")) { // Add todo task
+                String desc = input.split("todo ")[1];
+
+                if (desc.isEmpty()) {
+                    indentedReply("Task description cannot be empty");
+                } else {
+                    addToList(new TodoTask(desc));
+                }
             } else {
                 indentedReply("Please input a valid task type of either deadline, todo or event");
             }
@@ -108,7 +128,7 @@ public class Noob {
         memory[numItems++] = task;
         String s = "Got it. I've added this task:\n";
         String numTasks = String.format("%sNow you have %d tasks in the list.", LINE_SPACING, numItems);
-        indentedReply(s + "  " + task.toString() + "\n" + numTasks);
+        indentedReply(s + "  " + LINE_SPACING + task.toString() + "\n" + numTasks);
     }
 
     /**
