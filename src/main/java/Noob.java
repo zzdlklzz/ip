@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Noob {
     private String LINE_SPACING = "     ";
     private Scanner scanner;
-    private Task[] memory = new Task[100];
+    private ArrayList<Task> memory = new ArrayList<>();
     private int numItems = 0;
 
     /**
@@ -173,16 +173,16 @@ public class Noob {
         }
 
         if (markDone) {
-            memory[i].markDone();
+            memory.get(i).markDone();
         } else {
-            memory[i].unmarkDone();
+            memory.get(i).unmarkDone();
         }
 
         String msg = markDone
                 ? "Nice! I've marked this task as done:\n"
                 : "Ok, I've marked this task as not done yet\n";
 
-        indentedReply(msg + LINE_SPACING + "  " + memory[i]);
+        indentedReply(msg + LINE_SPACING + "  " + memory.get(i));
     }
 
     /**
@@ -191,12 +191,8 @@ public class Noob {
     private void displayList() {
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < memory.length; i++) {
-            Task task = memory[i];
-
-            if (task == null) {
-                break;
-            }
+        for (int i = 0; i < memory.size(); i++) {
+            Task task = memory.get(i);
 
             sb.append(i + 1);
             sb.append(".");
@@ -215,13 +211,8 @@ public class Noob {
      * @param task to be added to memory
      */
     private void addToList(Task task) {
-        if (numItems >= memory.length) {
-            String reply = "Memory is full";
-            indentedReply(reply);
-            return;
-        }
-
-        memory[numItems++] = task;
+        memory.add(task);
+        numItems++;
         String s = "Got it. I've added this task:\n";
         String numTasks = String.format("%sNow you have %d tasks in the list.", LINE_SPACING, numItems);
         indentedReply(s + "  " + LINE_SPACING + task.toString() + "\n" + numTasks);
