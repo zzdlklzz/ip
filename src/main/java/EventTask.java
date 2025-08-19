@@ -1,11 +1,16 @@
 public class EventTask extends Task {
 
-    public EventTask(String text) {
+    private String from;
+    private String to;
+
+    public EventTask(String text, String from, String to) {
         super(text);
+        this.from = from;
+        this.to = to;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString();
+        return "[E]" + super.toString() + String.format(" (from: %s to: %s)", from, to);
     }
 }
