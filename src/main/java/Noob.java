@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Noob {
     private String LINE_SPACING = "     ";
     private Scanner scanner;
-    private String[] memory = new String[100];
+    private Task[] memory = new Task[100];
     private int numItems = 0;
 
     /**
@@ -15,18 +15,57 @@ public class Noob {
 
         // Chat loop
         while (true) {
-            String input = scanner.nextLine();
+            String input = scanner.nextLine().trim();
 
-            if (input.equalsIgnoreCase("bye")) {
+            if (input.equalsIgnoreCase("bye")) { // Exit
                 this.exit();
                 break;
-            } else if (input.equalsIgnoreCase("list")) {
+            } else if (input.equalsIgnoreCase("list")) { // Display list
                 displayList();
+            } else if (input.toLowerCase().startsWith("mark ")) { // Mark task done
+                try {
+                    int i = Integer.parseInt(input.split(" ")[1]);
+                    markTask(i, true);
+                } catch (NumberFormatException e) {
+                    indentedReply("Please input a valid task number to mark as done");
+                }
+            } else if (input.toLowerCase().startsWith("unmark ")) { // Unmark task done
+                try {
+                    int i = Integer.parseInt(input.split(" ")[1]);
+                    markTask(i, false);
+                } catch (NumberFormatException e) {
+                    indentedReply("Please input a valid task number to mark as done");
+                }
             } else {
                 addToList(input);
                 indentedReply("added: " + input);
             }
         }
+    }
+
+    /**
+     * Marks task done or undone
+     * @param taskNum 1-base indexed task number to mark as done or undone
+     */
+    private void markTask(int taskNum, boolean markDone) {
+        int i = taskNum - 1;
+
+        if (i < 0 || i >= numItems) {
+            indentedReply("No task numbered " + taskNum);
+            return;
+        }
+
+        if (markDone) {
+            memory[i].markDone();
+        } else {
+            memory[i].unmarkDone();
+        }
+
+        String msg = markDone
+                ? "Nice! I've marked this task as done:\n"
+                : "Ok, I've marked this task as not done yet\n";
+
+        indentedReply(msg + LINE_SPACING + "  " + memory[i]);
     }
 
     /**
@@ -36,18 +75,22 @@ public class Noob {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < memory.length; i++) {
-            String s = memory[i];
+            Task task = memory[i];
 
-            if (s == null) {
+            if (task == null) {
                 break;
             }
 
             sb.append(i + 1);
-            sb.append(". ");
-            sb.append(s).append("\n").append(LINE_SPACING);
+            sb.append(".");
+            sb.append(task).append("\n").append(LINE_SPACING);
         }
 
-        indentedReply(sb.toString().trim());
+        String reply = sb.isEmpty()
+                ? "No tasks to display"
+                : sb.toString().trim();
+
+        indentedReply(reply);
     }
 
     /**
@@ -61,7 +104,7 @@ public class Noob {
             return;
         }
 
-        memory[numItems++] = text;
+        memory[numItems++] = new Task(text);
     }
 
     /**
