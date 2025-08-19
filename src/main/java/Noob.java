@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Noob {
@@ -23,15 +23,29 @@ public class Noob {
                 break;
             } else if (input.equalsIgnoreCase("list")) { // Display list
                 displayList();
-            } else if (input.toLowerCase().startsWith("mark ")) { // Mark task done
+            } else if (input.toLowerCase().startsWith("mark")) { // Mark task done
                 try {
+                    String[] parsedInput = input.split(" ");
+
+                    if (parsedInput.length <= 1) {
+                        indentedReply("Not sure what to mark!");
+                        return;
+                    }
+
                     int i = Integer.parseInt(input.split(" ")[1]);
                     markTask(i, true);
                 } catch (NumberFormatException e) {
                     indentedReply("Please input a valid task number to mark as done");
                 }
-            } else if (input.toLowerCase().startsWith("unmark ")) { // Unmark task done
+            } else if (input.toLowerCase().startsWith("unmark")) { // Unmark task done
                 try {
+                    String[] parsedInput = input.split(" ");
+
+                    if (parsedInput.length <= 1) {
+                        indentedReply("Not sure what to unmark!");
+                        return;
+                    }
+
                     int i = Integer.parseInt(input.split(" ")[1]);
                     markTask(i, false);
                 } catch (NumberFormatException e) {
