@@ -46,7 +46,7 @@ public class Noob {
                         return;
                     }
 
-                    int i = Integer.parseInt(input.split(" ")[1]);
+                    int i = Integer.parseInt(parsedInput[1]);
                     markTask(i, false);
                 } catch (NumberFormatException e) {
                     indentedReply("Please input a valid task number to mark as done");
@@ -65,17 +65,55 @@ public class Noob {
                 } catch (NoobException e) {
                     indentedReply(e.getMessage());
                 }
-            } else if (input.toLowerCase().startsWith("event")) {
+            } else if (input.toLowerCase().startsWith("event")) { // Add event task
                 try {
                     EventTask task = parseEventInput(input);
                     addToList(task);
                 } catch (NoobException e) {
                     indentedReply(e.getMessage());
                 }
+            } else if (input.toLowerCase().startsWith("delete")) { // Delete task
+                try {
+                    String[] parsedInput = input.split(" ");
+
+                    if (parsedInput.length <= 1) {
+                        indentedReply("Not sure what to delete!");
+                        return;
+                    }
+
+                    int i = Integer.parseInt(parsedInput[1]);
+                    deleteTask(i);
+                } catch (NumberFormatException e) {
+                    indentedReply("Please input a valid task number to be deleted");
+                }
             } else {
                 indentedReply("Please input a valid task type of either deadline, todo or event");
             }
         }
+    }
+
+    /**
+     * Deletes a specified task index from the list
+     * @param i task index to be deleted
+     */
+    private void deleteTask(int i) {
+        if (numItems == 0) {
+            indentedReply("No tasks to delete");
+            return;
+        }
+
+        if (i < 0 || i >= numItems) {
+            indentedReply("Task number does not exist");
+            return;
+        }
+
+        Task task = memory.remove(i);
+        numItems--;
+
+        String msg = "Noted. I've removed this task:\n";
+        String numTasks = String.format("%sNow you have %d tasks in the list.", LINE_SPACING, numItems);
+
+        indentedReply(msg + "  " + LINE_SPACING + task + "\n" + numTasks);
     }
 
     /**
