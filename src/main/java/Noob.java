@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Noob {
@@ -57,6 +58,24 @@ public class Noob {
                     indentedReply("Task description cannot be empty");
                 } else {
                     addToList(new TodoTask(desc));
+                }
+            } else if (input.toLowerCase().startsWith("event ")) {
+                try {
+                    String[] parsedInput = input.split(" /from ");
+                    String[] dateTimeParse = parsedInput[1].split(" /to ");
+
+                    String from = dateTimeParse[0];
+                    String to = dateTimeParse[1];
+                    String[] parseDesc = parsedInput[0].split("event");
+
+                    if (parseDesc.length <= 1) {
+                        indentedReply("Task description cannot be empty");
+                    } else {
+                        String desc = parseDesc[1].trim();
+                        addToList(new EventTask(desc, from, to));
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    indentedReply("Please include /from date and /to date");
                 }
             } else {
                 indentedReply("Please input a valid task type of either deadline, todo or event");
