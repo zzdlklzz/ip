@@ -56,14 +56,6 @@ public class Noob {
     }
 
     /**
-     * Echoes the input string
-     * @param text input string to be echoed to user
-     */
-    private void repeatText(String text) {
-        indentedReply(text);
-    }
-
-    /**
      * Greets the user upon bot start up
      */
     private void greet() {
