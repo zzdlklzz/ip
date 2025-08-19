@@ -36,9 +36,10 @@ public class Noob {
                 } catch (NumberFormatException e) {
                     indentedReply("Please input a valid task number to mark as done");
                 }
+            } else if (input.toLowerCase().startsWith("deadline ")) { // Add deadline task
+
             } else {
-                addToList(input);
-                indentedReply("added: " + input);
+                indentedReply("Please input a valid task type of either deadline, todo or event");
             }
         }
     }
@@ -94,17 +95,20 @@ public class Noob {
     }
 
     /**
-     * Saves input text to memory
-     * @param text to be added to memory
+     * Saves input task to memory
+     * @param task to be added to memory
      */
-    private void addToList(String text) {
+    private void addToList(Task task) {
         if (numItems >= memory.length) {
             String reply = "Memory is full";
             indentedReply(reply);
             return;
         }
 
-        memory[numItems++] = new Task(text);
+        memory[numItems++] = task;
+        String s = "Got it. I've added this task:\n";
+        String numTasks = String.format("%sNow you have %d tasks in the list.", LINE_SPACING, numItems);
+        indentedReply(s + "  " + task.toString() + "\n" + numTasks);
     }
 
     /**
