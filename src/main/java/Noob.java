@@ -1,7 +1,9 @@
 import java.util.Scanner;
 
 public class Noob {
-    Scanner scanner;
+    private Scanner scanner;
+    private String[] memory = new String[100];
+    private int numItems = 0;
 
     /**
      * Initialises a new scanner and starts the bot
@@ -14,13 +16,34 @@ public class Noob {
         while (true) {
             String input = scanner.nextLine();
 
-            if (!input.equalsIgnoreCase("bye")) {
-                repeatText(input);
-            } else {
+            if (input.equalsIgnoreCase("bye")) {
                 this.exit();
                 break;
+            } else if (input.equalsIgnoreCase("list")) {
+                displayList();
+            } else {
+                addToList(input);
+                indentedReply("added: " + input);
             }
         }
+    }
+
+    private void displayList() {
+
+    }
+
+    /**
+     * Saves input text to memory
+     * @param text to be added to memory
+     */
+    private void addToList(String text) {
+        if (numItems >= memory.length) {
+            String reply = "Memory is full";
+            indentedReply(reply);
+            return;
+        }
+
+        memory[numItems++] = text;
     }
 
     /**
