@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class Noob {
+    private String LINE_SPACING = "     ";
     private Scanner scanner;
     private String[] memory = new String[100];
     private int numItems = 0;
@@ -28,8 +29,25 @@ public class Noob {
         }
     }
 
+    /**
+     * Display a numbered list based on items in memory
+     */
     private void displayList() {
+        StringBuilder sb = new StringBuilder();
 
+        for (int i = 0; i < memory.length; i++) {
+            String s = memory[i];
+
+            if (s == null) {
+                break;
+            }
+
+            sb.append(i + 1);
+            sb.append(". ");
+            sb.append(s).append("\n").append(LINE_SPACING);
+        }
+
+        indentedReply(sb.toString().trim());
     }
 
     /**
@@ -51,8 +69,7 @@ public class Noob {
      * @param text to be indented
      */
     private void indentedReply(String text) {
-        String spacing = "     ";
-        System.out.println(spacing + text);
+        System.out.println(LINE_SPACING + text);
     }
 
     /**
