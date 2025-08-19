@@ -24,11 +24,20 @@ public class Noob {
     }
 
     /**
+     * Indent bot replies
+     * @param text to be indented
+     */
+    private void indentedReply(String text) {
+        String spacing = "     ";
+        System.out.println(spacing + text);
+    }
+
+    /**
      * Echoes the input string
      * @param text input string to be echoed to user
      */
     private void repeatText(String text) {
-        System.out.println(text);
+        indentedReply(text);
     }
 
     /**
