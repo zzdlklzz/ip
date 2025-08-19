@@ -51,50 +51,113 @@ public class Noob {
                 } catch (NumberFormatException e) {
                     indentedReply("Please input a valid task number to mark as done");
                 }
-            } else if (input.toLowerCase().startsWith("deadline ")) { // Add deadline task
+            } else if (input.toLowerCase().startsWith("deadline")) { // Add deadline task
                 try {
-                    String[] parsedInput = input.split(" /by ");
-                    String deadline = parsedInput[1];
-                    String desc = parsedInput[0].split("deadline ")[1];
-
-                    if (desc.isEmpty()) {
-                        indentedReply("Task description cannot be empty");
-                    } else {
-                        addToList(new DeadlineTask(desc, deadline));
-                    }
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    indentedReply("Please include a deadline for your task by inputting \"/by\"");
+                    DeadlineTask task = parseDeadlineInput(input);
+                    addToList(task);
+                } catch (NoobException e) {
+                    indentedReply(e.getMessage());
                 }
-            } else if (input.toLowerCase().startsWith("todo ")) { // Add todo task
-                String desc = input.split("todo ")[1];
-
-                if (desc.isEmpty()) {
-                    indentedReply("Task description cannot be empty");
-                } else {
-                    addToList(new TodoTask(desc));
-                }
-            } else if (input.toLowerCase().startsWith("event ")) {
+            } else if (input.toLowerCase().startsWith("todo")) { // Add todo task
                 try {
-                    String[] parsedInput = input.split(" /from ");
-                    String[] dateTimeParse = parsedInput[1].split(" /to ");
-
-                    String from = dateTimeParse[0];
-                    String to = dateTimeParse[1];
-                    String[] parseDesc = parsedInput[0].split("event");
-
-                    if (parseDesc.length <= 1) {
-                        indentedReply("Task description cannot be empty");
-                    } else {
-                        String desc = parseDesc[1].trim();
-                        addToList(new EventTask(desc, from, to));
-                    }
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    indentedReply("Please include /from date and /to date");
+                    TodoTask task = parseTodoInput(input);
+                    addToList(task);
+                } catch (NoobException e) {
+                    indentedReply(e.getMessage());
+                }
+            } else if (input.toLowerCase().startsWith("event")) {
+                try {
+                    EventTask task = parseEventInput(input);
+                    addToList(task);
+                } catch (NoobException e) {
+                    indentedReply(e.getMessage());
                 }
             } else {
                 indentedReply("Please input a valid task type of either deadline, todo or event");
             }
         }
+    }
+
+    /**
+     * Parses the expected input string for an event task and returns the task object
+     * @param input event string input
+     * @return EventTask object
+     */
+    private EventTask parseEventInput(String input) throws NoobException {
+        String[] parsedInput = input.split("event");
+
+        if (parsedInput.length <= 1) {
+            throw new NoobException("Task description cannot be empty");
+        }
+
+        String[] descAndFromTo = parsedInput[1].split("/from");
+
+        if (descAndFromTo.length <= 1) {
+            throw new NoobException("Please use /from to indicate start of event");
+        }
+
+        String desc = descAndFromTo[0].trim();
+
+        if (desc.isEmpty()) {
+            throw new NoobException("Task description cannot be empty");
+        }
+
+        String[] fromTo = descAndFromTo[1].split("/to");
+
+        if (fromTo.length <= 1) {
+            throw new NoobException("Please use /to to indicate end of event");
+        }
+
+        String from = fromTo[0].trim();
+        String to = fromTo[1].trim();
+
+        return new EventTask(desc, from, to);
+    }
+
+    /**
+     * Parses the expected input string for a todo task and returns the task object
+     * @param input todo string input
+     * @return TodoTask object
+     */
+    private TodoTask parseTodoInput(String input) throws NoobException {
+        String[] parsedInput = input.split("todo");
+
+        if (parsedInput.length <= 1) {
+            throw new NoobException("Task description cannot be empty");
+        }
+
+        String desc = parsedInput[1].trim();
+
+        return new TodoTask(desc);
+    }
+
+    /**
+     * Parses the expected input string for a deadline task and returns the task object
+     * @param input deadline string input
+     * @return DeadlineTask object
+     */
+    private DeadlineTask parseDeadlineInput(String input) throws NoobException {
+        String[] parsedInput = input.split("deadline");
+
+        if (parsedInput.length <= 1) {
+            throw new NoobException("Task description cannot be empty");
+        }
+
+        String[] descAndDeadline = parsedInput[1].split("/by");
+
+        if (descAndDeadline.length <= 1) {
+            throw new NoobException("Please use /by to indicate deadline");
+        }
+
+        String desc = descAndDeadline[0].trim();
+
+        if (desc.isEmpty()) {
+            throw new NoobException("Task description cannot be empty");
+        }
+
+        String deadline = descAndDeadline[1].trim();
+
+        return new DeadlineTask(desc, deadline);
     }
 
     /**
