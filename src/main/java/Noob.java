@@ -29,7 +29,7 @@ public class Noob {
 
                     if (parsedInput.length <= 1) {
                         indentedReply("Not sure what to mark!");
-                        return;
+                        continue;
                     }
 
                     int i = Integer.parseInt(input.split(" ")[1]);
@@ -43,7 +43,7 @@ public class Noob {
 
                     if (parsedInput.length <= 1) {
                         indentedReply("Not sure what to unmark!");
-                        return;
+                        continue;
                     }
 
                     int i = Integer.parseInt(parsedInput[1]);
@@ -78,7 +78,7 @@ public class Noob {
 
                     if (parsedInput.length <= 1) {
                         indentedReply("Not sure what to delete!");
-                        return;
+                        continue;
                     }
 
                     int i = Integer.parseInt(parsedInput[1]);
@@ -102,12 +102,12 @@ public class Noob {
             return;
         }
 
-        if (i < 0 || i >= numItems) {
-            indentedReply("Task number does not exist");
+        if (i <= 0 || i > numItems) {
+            indentedReply("Task number " + i + " does not exist");
             return;
         }
 
-        Task task = memory.remove(i);
+        Task task = memory.remove(i - 1);
         numItems--;
 
         String msg = "Noted. I've removed this task:\n";
