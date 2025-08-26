@@ -8,6 +8,11 @@ public class DeadlineTask extends Task {
     }
 
     @Override
+    public TaskType getType() {
+        return TaskType.DEADLINE;
+    }
+
+    @Override
     public String toString() {
         return "[D]" + super.toString() + String.format(" (by: %s)", deadline);
     }

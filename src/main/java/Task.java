@@ -14,6 +14,8 @@ public abstract class Task {
         this.isDone = false;
     }
 
+    public abstract TaskType getType();
+
     @Override
     public String toString() {
         String s = isDone ? "[X]" : "[ ]";
