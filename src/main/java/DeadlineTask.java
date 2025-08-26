@@ -7,6 +7,15 @@ public class DeadlineTask extends Task {
         this.deadline = deadline;
     }
 
+    public String getDeadline() {
+        return this.deadline;
+    }
+
+    @Override
+    public TaskType getType() {
+        return TaskType.DEADLINE;
+    }
+
     @Override
     public String toString() {
         return "[D]" + super.toString() + String.format(" (by: %s)", deadline);

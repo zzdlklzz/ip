@@ -3,9 +3,11 @@ import java.util.Scanner;
 
 public class Noob {
     private String LINE_SPACING = "     ";
+    private String FILE_PATH = "data/tasks-file.txt";
+    private FileOperator fileOperator = new FileOperator();
     private Scanner scanner;
-    private ArrayList<Task> memory = new ArrayList<>();
-    private int numItems = 0;
+    private ArrayList<Task> memory;
+    private int numItems;
 
     /**
      * Initialises a new scanner and starts the bot
@@ -13,6 +15,15 @@ public class Noob {
     public void start() {
         this.scanner = new Scanner(System.in);
         this.greet();
+
+        // Load in tasks
+        try {
+            this.memory = fileOperator.getListOfTasks(FILE_PATH);
+            this.numItems = memory.size();
+        } catch (NoobException e) {
+            indentedReply(e.getMessage());
+            return;
+        }
 
         // Chat loop
         while (true) {
@@ -29,11 +40,12 @@ public class Noob {
 
                     if (parsedInput.length <= 1) {
                         indentedReply("Not sure what to mark!");
-                        return;
+                        continue;
                     }
 
                     int i = Integer.parseInt(input.split(" ")[1]);
                     markTask(i, true);
+                    updateTxtFile();
                 } catch (NumberFormatException e) {
                     indentedReply("Please input a valid task number to mark as done");
                 }
@@ -43,11 +55,12 @@ public class Noob {
 
                     if (parsedInput.length <= 1) {
                         indentedReply("Not sure what to unmark!");
-                        return;
+                        continue;
                     }
 
                     int i = Integer.parseInt(parsedInput[1]);
                     markTask(i, false);
+                    updateTxtFile();
                 } catch (NumberFormatException e) {
                     indentedReply("Please input a valid task number to mark as done");
                 }
@@ -55,6 +68,7 @@ public class Noob {
                 try {
                     DeadlineTask task = parseDeadlineInput(input);
                     addToList(task);
+                    updateTxtFile();
                 } catch (NoobException e) {
                     indentedReply(e.getMessage());
                 }
@@ -62,6 +76,7 @@ public class Noob {
                 try {
                     TodoTask task = parseTodoInput(input);
                     addToList(task);
+                    updateTxtFile();
                 } catch (NoobException e) {
                     indentedReply(e.getMessage());
                 }
@@ -69,6 +84,7 @@ public class Noob {
                 try {
                     EventTask task = parseEventInput(input);
                     addToList(task);
+                    updateTxtFile();
                 } catch (NoobException e) {
                     indentedReply(e.getMessage());
                 }
@@ -78,11 +94,12 @@ public class Noob {
 
                     if (parsedInput.length <= 1) {
                         indentedReply("Not sure what to delete!");
-                        return;
+                        continue;
                     }
 
                     int i = Integer.parseInt(parsedInput[1]);
                     deleteTask(i);
+                    updateTxtFile();
                 } catch (NumberFormatException e) {
                     indentedReply("Please input a valid task number to be deleted");
                 }
@@ -93,8 +110,20 @@ public class Noob {
     }
 
     /**
+     * Updates data/tasks-file.txt
+     */
+    public void updateTxtFile() {
+        try {
+            fileOperator.writeTasksToFile(FILE_PATH, memory);
+        } catch (NoobException e) {
+            indentedReply(e.getMessage());
+        }
+    }
+
+    /**
      * Deletes a specified task index from the list
-     * @param i task index to be deleted
+     *
+     * @param i Task index to be deleted
      */
     private void deleteTask(int i) {
         if (numItems == 0) {
@@ -102,23 +131,24 @@ public class Noob {
             return;
         }
 
-        if (i < 0 || i >= numItems) {
-            indentedReply("Task number does not exist");
+        if (i <= 0 || i > numItems) {
+            indentedReply("Task number " + i + " does not exist");
             return;
         }
 
-        Task task = memory.remove(i);
+        Task task = memory.remove(i - 1);
         numItems--;
 
         String msg = "Noted. I've removed this task:\n";
-        String numTasks = String.format("%sNow you have %d tasks in the list.", LINE_SPACING, numItems);
+        String numTasks = String.format("Now you have %d tasks in the list.", numItems);
 
-        indentedReply(msg + "  " + LINE_SPACING + task + "\n" + numTasks);
+        indentedReply(msg + "  " + task + "\n" + numTasks);
     }
 
     /**
      * Parses the expected input string for an event task and returns the task object
-     * @param input event string input
+     *
+     * @param input Event string input
      * @return EventTask object
      */
     private EventTask parseEventInput(String input) throws NoobException {
@@ -154,7 +184,8 @@ public class Noob {
 
     /**
      * Parses the expected input string for a todo task and returns the task object
-     * @param input todo string input
+     *
+     * @param input Todo string input
      * @return TodoTask object
      */
     private TodoTask parseTodoInput(String input) throws NoobException {
@@ -171,7 +202,8 @@ public class Noob {
 
     /**
      * Parses the expected input string for a deadline task and returns the task object
-     * @param input deadline string input
+     *
+     * @param input Deadline string input
      * @return DeadlineTask object
      */
     private DeadlineTask parseDeadlineInput(String input) throws NoobException {
@@ -200,6 +232,7 @@ public class Noob {
 
     /**
      * Marks task done or undone
+     *
      * @param taskNum 1-base indexed task number to mark as done or undone
      */
     private void markTask(int taskNum, boolean markDone) {
@@ -220,11 +253,11 @@ public class Noob {
                 ? "Nice! I've marked this task as done:\n"
                 : "Ok, I've marked this task as not done yet\n";
 
-        indentedReply(msg + LINE_SPACING + "  " + memory.get(i));
+        indentedReply(msg + "  " + memory.get(i));
     }
 
     /**
-     * Display a numbered list based on items in memory
+     * Displays a numbered list based on items in memory
      */
     private void displayList() {
         StringBuilder sb = new StringBuilder();
@@ -234,7 +267,7 @@ public class Noob {
 
             sb.append(i + 1);
             sb.append(".");
-            sb.append(task).append("\n").append(LINE_SPACING);
+            sb.append(task).append("\n");
         }
 
         String reply = sb.isEmpty()
@@ -246,22 +279,27 @@ public class Noob {
 
     /**
      * Saves input task to memory
-     * @param task to be added to memory
+     *
+     * @param task Task to be added to memory
      */
     private void addToList(Task task) {
         memory.add(task);
         numItems++;
         String s = "Got it. I've added this task:\n";
-        String numTasks = String.format("%sNow you have %d tasks in the list.", LINE_SPACING, numItems);
-        indentedReply(s + "  " + LINE_SPACING + task.toString() + "\n" + numTasks);
+        String numTasks = String.format("Now you have %d tasks in the list.", numItems);
+        indentedReply(s + "  " + task.toString() + "\n" + numTasks);
     }
 
     /**
-     * Indent bot replies
-     * @param text to be indented
+     * Indents bot replies
+     *
+     * @param text Text to be indented
      */
     private void indentedReply(String text) {
-        System.out.println(LINE_SPACING + text);
+        String[] lineSplit = text.split("\n");
+        for (String s : lineSplit) {
+            System.out.println(LINE_SPACING + s);
+        }
     }
 
     /**
