@@ -94,7 +94,7 @@ public class Noob {
 
     /**
      * Deletes a specified task index from the list
-     * @param i task index to be deleted
+     * @param i Task index to be deleted
      */
     private void deleteTask(int i) {
         if (numItems == 0) {
@@ -118,7 +118,7 @@ public class Noob {
 
     /**
      * Parses the expected input string for an event task and returns the task object
-     * @param input event string input
+     * @param input Event string input
      * @return EventTask object
      */
     private EventTask parseEventInput(String input) throws NoobException {
@@ -154,7 +154,7 @@ public class Noob {
 
     /**
      * Parses the expected input string for a todo task and returns the task object
-     * @param input todo string input
+     * @param input Todo string input
      * @return TodoTask object
      */
     private TodoTask parseTodoInput(String input) throws NoobException {
@@ -171,7 +171,7 @@ public class Noob {
 
     /**
      * Parses the expected input string for a deadline task and returns the task object
-     * @param input deadline string input
+     * @param input Deadline string input
      * @return DeadlineTask object
      */
     private DeadlineTask parseDeadlineInput(String input) throws NoobException {
@@ -246,7 +246,7 @@ public class Noob {
 
     /**
      * Saves input task to memory
-     * @param task to be added to memory
+     * @param task Task to be added to memory
      */
     private void addToList(Task task) {
         memory.add(task);
@@ -258,7 +258,7 @@ public class Noob {
 
     /**
      * Indent bot replies
-     * @param text to be indented
+     * @param text Text to be indented
      */
     private void indentedReply(String text) {
         String[] lineSplit = text.split("\n");
