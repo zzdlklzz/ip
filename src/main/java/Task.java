@@ -16,6 +16,10 @@ public abstract class Task {
 
     public abstract TaskType getType();
 
+    public String getDesc() {
+        return this.desc;
+    }
+
     @Override
     public String toString() {
         String s = isDone ? "[X]" : "[ ]";
