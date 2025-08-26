@@ -111,9 +111,9 @@ public class Noob {
         numItems--;
 
         String msg = "Noted. I've removed this task:\n";
-        String numTasks = String.format("%sNow you have %d tasks in the list.", LINE_SPACING, numItems);
+        String numTasks = String.format("Now you have %d tasks in the list.", numItems);
 
-        indentedReply(msg + "  " + LINE_SPACING + task + "\n" + numTasks);
+        indentedReply(msg + "  " + task + "\n" + numTasks);
     }
 
     /**
@@ -220,7 +220,7 @@ public class Noob {
                 ? "Nice! I've marked this task as done:\n"
                 : "Ok, I've marked this task as not done yet\n";
 
-        indentedReply(msg + LINE_SPACING + "  " + memory.get(i));
+        indentedReply(msg + "  " + memory.get(i));
     }
 
     /**
@@ -234,7 +234,7 @@ public class Noob {
 
             sb.append(i + 1);
             sb.append(".");
-            sb.append(task).append("\n").append(LINE_SPACING);
+            sb.append(task).append("\n");
         }
 
         String reply = sb.isEmpty()
@@ -252,8 +252,8 @@ public class Noob {
         memory.add(task);
         numItems++;
         String s = "Got it. I've added this task:\n";
-        String numTasks = String.format("%sNow you have %d tasks in the list.", LINE_SPACING, numItems);
-        indentedReply(s + "  " + LINE_SPACING + task.toString() + "\n" + numTasks);
+        String numTasks = String.format("Now you have %d tasks in the list.", numItems);
+        indentedReply(s + "  " + task.toString() + "\n" + numTasks);
     }
 
     /**
@@ -261,7 +261,10 @@ public class Noob {
      * @param text to be indented
      */
     private void indentedReply(String text) {
-        System.out.println(LINE_SPACING + text);
+        String[] lineSplit = text.split("\n");
+        for (String s : lineSplit) {
+            System.out.println(LINE_SPACING + s);
+        }
     }
 
     /**
