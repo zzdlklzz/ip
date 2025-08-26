@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class Noob {
     private String LINE_SPACING = "     ";
+    private String FILE_PATH = "../../../tasks-file.txt";
     private Scanner scanner;
     private ArrayList<Task> memory = new ArrayList<>();
     private int numItems = 0;
@@ -94,6 +95,7 @@ public class Noob {
 
     /**
      * Deletes a specified task index from the list
+     *
      * @param i Task index to be deleted
      */
     private void deleteTask(int i) {
@@ -118,6 +120,7 @@ public class Noob {
 
     /**
      * Parses the expected input string for an event task and returns the task object
+     *
      * @param input Event string input
      * @return EventTask object
      */
@@ -154,6 +157,7 @@ public class Noob {
 
     /**
      * Parses the expected input string for a todo task and returns the task object
+     *
      * @param input Todo string input
      * @return TodoTask object
      */
@@ -171,6 +175,7 @@ public class Noob {
 
     /**
      * Parses the expected input string for a deadline task and returns the task object
+     *
      * @param input Deadline string input
      * @return DeadlineTask object
      */
@@ -200,6 +205,7 @@ public class Noob {
 
     /**
      * Marks task done or undone
+     *
      * @param taskNum 1-base indexed task number to mark as done or undone
      */
     private void markTask(int taskNum, boolean markDone) {
@@ -224,7 +230,7 @@ public class Noob {
     }
 
     /**
-     * Display a numbered list based on items in memory
+     * Displays a numbered list based on items in memory
      */
     private void displayList() {
         StringBuilder sb = new StringBuilder();
@@ -246,6 +252,7 @@ public class Noob {
 
     /**
      * Saves input task to memory
+     *
      * @param task Task to be added to memory
      */
     private void addToList(Task task) {
@@ -257,7 +264,8 @@ public class Noob {
     }
 
     /**
-     * Indent bot replies
+     * Indents bot replies
+     *
      * @param text Text to be indented
      */
     private void indentedReply(String text) {
