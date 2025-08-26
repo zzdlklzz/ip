@@ -7,6 +7,10 @@ public class DeadlineTask extends Task {
         this.deadline = deadline;
     }
 
+    public String getDeadline() {
+        return this.deadline;
+    }
+
     @Override
     public TaskType getType() {
         return TaskType.DEADLINE;
