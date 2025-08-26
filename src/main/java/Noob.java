@@ -3,10 +3,11 @@ import java.util.Scanner;
 
 public class Noob {
     private String LINE_SPACING = "     ";
-    private String FILE_PATH = "../../../tasks-file.txt";
+    private String FILE_PATH = "data/tasks-file.txt";
+    private FileOperator fileOperator = new FileOperator();
     private Scanner scanner;
-    private ArrayList<Task> memory = new ArrayList<>();
-    private int numItems = 0;
+    private ArrayList<Task> memory;
+    private int numItems;
 
     /**
      * Initialises a new scanner and starts the bot
@@ -14,6 +15,15 @@ public class Noob {
     public void start() {
         this.scanner = new Scanner(System.in);
         this.greet();
+
+        // Load in tasks
+        try {
+            this.memory = fileOperator.getListOfTasks(FILE_PATH);
+            this.numItems = memory.size();
+        } catch (NoobException e) {
+            indentedReply(e.getMessage());
+            return;
+        }
 
         // Chat loop
         while (true) {
@@ -35,6 +45,7 @@ public class Noob {
 
                     int i = Integer.parseInt(input.split(" ")[1]);
                     markTask(i, true);
+                    updateTxtFile();
                 } catch (NumberFormatException e) {
                     indentedReply("Please input a valid task number to mark as done");
                 }
@@ -49,6 +60,7 @@ public class Noob {
 
                     int i = Integer.parseInt(parsedInput[1]);
                     markTask(i, false);
+                    updateTxtFile();
                 } catch (NumberFormatException e) {
                     indentedReply("Please input a valid task number to mark as done");
                 }
@@ -56,6 +68,7 @@ public class Noob {
                 try {
                     DeadlineTask task = parseDeadlineInput(input);
                     addToList(task);
+                    updateTxtFile();
                 } catch (NoobException e) {
                     indentedReply(e.getMessage());
                 }
@@ -63,6 +76,7 @@ public class Noob {
                 try {
                     TodoTask task = parseTodoInput(input);
                     addToList(task);
+                    updateTxtFile();
                 } catch (NoobException e) {
                     indentedReply(e.getMessage());
                 }
@@ -70,6 +84,7 @@ public class Noob {
                 try {
                     EventTask task = parseEventInput(input);
                     addToList(task);
+                    updateTxtFile();
                 } catch (NoobException e) {
                     indentedReply(e.getMessage());
                 }
@@ -84,12 +99,24 @@ public class Noob {
 
                     int i = Integer.parseInt(parsedInput[1]);
                     deleteTask(i);
+                    updateTxtFile();
                 } catch (NumberFormatException e) {
                     indentedReply("Please input a valid task number to be deleted");
                 }
             } else {
                 indentedReply("Please input a valid task type of either deadline, todo or event");
             }
+        }
+    }
+
+    /**
+     * Updates data/tasks-file.txt
+     */
+    public void updateTxtFile() {
+        try {
+            fileOperator.writeTasksToFile(FILE_PATH, memory);
+        } catch (NoobException e) {
+            indentedReply(e.getMessage());
         }
     }
 
