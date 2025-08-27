@@ -6,7 +6,7 @@ public class Noob {
     private String FILE_PATH = "data/tasks-file.txt";
     private FileOperator fileOperator = new FileOperator();
     private Scanner scanner;
-    private ArrayList<Task> memory;
+    private ArrayList<Task> memory = new ArrayList<>();
     private int numItems;
 
     public Noob() {
