@@ -9,21 +9,22 @@ public class Noob {
     private ArrayList<Task> memory;
     private int numItems;
 
-    /**
-     * Initialises a new scanner and starts the bot
-     */
-    public void start() {
-        this.scanner = new Scanner(System.in);
-        this.greet();
-
+    public Noob() {
         // Load in tasks
         try {
             this.memory = fileOperator.getListOfTasks(FILE_PATH);
             this.numItems = memory.size();
         } catch (NoobException e) {
             indentedReply(e.getMessage());
-            return;
         }
+    }
+
+    /**
+     * Initialises a new scanner and starts the bot
+     */
+    public void start() {
+        this.scanner = new Scanner(System.in);
+        this.greet();
 
         // Chat loop
         while (true) {
