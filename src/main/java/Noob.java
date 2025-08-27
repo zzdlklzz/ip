@@ -6,8 +6,18 @@ public class Noob {
     private String FILE_PATH = "data/tasks-file.txt";
     private FileOperator fileOperator = new FileOperator();
     private Scanner scanner;
-    private ArrayList<Task> memory;
+    private ArrayList<Task> memory = new ArrayList<>();
     private int numItems;
+
+    public Noob() {
+        // Load in tasks
+        try {
+            this.memory = fileOperator.getListOfTasks(FILE_PATH);
+            this.numItems = memory.size();
+        } catch (NoobException e) {
+            indentedReply(e.getMessage());
+        }
+    }
 
     /**
      * Initialises a new scanner and starts the bot
@@ -15,15 +25,6 @@ public class Noob {
     public void start() {
         this.scanner = new Scanner(System.in);
         this.greet();
-
-        // Load in tasks
-        try {
-            this.memory = fileOperator.getListOfTasks(FILE_PATH);
-            this.numItems = memory.size();
-        } catch (NoobException e) {
-            indentedReply(e.getMessage());
-            return;
-        }
 
         // Chat loop
         while (true) {
