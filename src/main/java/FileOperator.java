@@ -62,13 +62,13 @@ public class FileOperator {
                 break;
             case DEADLINE:
                 DeadlineTask deadlineTask = (DeadlineTask) task;
-                String deadlineStr = taskType + " | " + isDone + " | " + desc + " | " + deadlineTask.getDeadline();
+                String deadlineStr = taskType + " | " + isDone + " | " + desc + " | " + deadlineTask.getIsoDeadline();
                 sb.append(deadlineStr).append("\n");
                 break;
             case EVENT:
                 EventTask eventTask = (EventTask) task;
-                String eventStr = taskType + " | " + isDone + " | " + desc + " | " + eventTask.getFrom()
-                        + " | " + eventTask.getTo();
+                String eventStr = taskType + " | " + isDone + " | " + desc + " | " + eventTask.getIsoFrom()
+                        + " | " + eventTask.getIsoTo();
                 sb.append(eventStr).append("\n");
             }
         }
