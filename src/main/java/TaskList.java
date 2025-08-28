@@ -9,8 +9,8 @@ public class TaskList {
         this.numTasks = 0;
     }
 
-    public TaskList(String filePath) throws NoobException {
-        this.tasks = new FileOperator().getListOfTasks(filePath);
+    public TaskList(Storage storage) throws NoobException {
+        this.tasks = storage.getListOfTasks();
         this.numTasks = this.tasks.size();
     }
 

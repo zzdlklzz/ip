@@ -3,14 +3,14 @@ import java.util.Scanner;
 public class Noob {
     private String LINE_SPACING = "     ";
     private String FILE_PATH = "data/tasks-file.txt";
-    private FileOperator fileOperator = new FileOperator();
+    private Storage storage;
     private Scanner scanner;
     private TaskList tasks;
 
     public Noob() {
-        // Load in tasks
         try {
-            this.tasks = new TaskList(FILE_PATH);
+            this.storage = new Storage(FILE_PATH);
+            this.tasks = new TaskList(this.storage);
         } catch (NoobException e) {
             System.out.println(e.getMessage() + "\n");
             this.tasks = new TaskList();
@@ -113,7 +113,7 @@ public class Noob {
      */
     public void updateTxtFile() {
         try {
-            fileOperator.writeTasksToFile(FILE_PATH, tasks);
+            storage.writeTasksToFile(tasks);
         } catch (NoobException e) {
             indentedReply(e.getMessage());
         }
