@@ -47,10 +47,12 @@ public class FileOperator {
      * @param tasks List of tasks to store
      * @throws NoobException If an error occurs on file writing
      */
-    public void writeTasksToFile(String filePath, ArrayList<Task> tasks) throws NoobException {
+    public void writeTasksToFile(String filePath, TaskList tasks) throws NoobException {
         StringBuilder sb = new StringBuilder();
+        int n = tasks.getNumTasks();
 
-        for (Task task : tasks) {
+        for (int i = 1; i <= n; i++) {
+            Task task = tasks.getTask(i);
             String desc = task.getDesc();
             TaskType taskType = task.getType();
             int isDone = task.isDone() ? 1 : 0;

@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Noob {
@@ -6,16 +5,15 @@ public class Noob {
     private String FILE_PATH = "data/tasks-file.txt";
     private FileOperator fileOperator = new FileOperator();
     private Scanner scanner;
-    private ArrayList<Task> memory = new ArrayList<>();
-    private int numItems;
+    private TaskList tasks;
 
     public Noob() {
         // Load in tasks
         try {
-            this.memory = fileOperator.getListOfTasks(FILE_PATH);
-            this.numItems = memory.size();
+            this.tasks = new TaskList(FILE_PATH);
         } catch (NoobException e) {
-            indentedReply(e.getMessage());
+            System.out.println(e.getMessage() + "\n");
+            this.tasks = new TaskList();
         }
     }
 
@@ -115,7 +113,7 @@ public class Noob {
      */
     public void updateTxtFile() {
         try {
-            fileOperator.writeTasksToFile(FILE_PATH, memory);
+            fileOperator.writeTasksToFile(FILE_PATH, tasks);
         } catch (NoobException e) {
             indentedReply(e.getMessage());
         }
@@ -127,23 +125,16 @@ public class Noob {
      * @param i Task index to be deleted
      */
     private void deleteTask(int i) {
-        if (numItems == 0) {
-            indentedReply("No tasks to delete");
-            return;
+        try {
+            Task deletedTask = this.tasks.deleteTask(i);
+
+            String msg = "Noted. I've removed this task:\n";
+            String numTasks = String.format("Now you have %d tasks in the list.", this.tasks.getNumTasks());
+
+            indentedReply(msg + "  " + deletedTask + "\n" + numTasks);
+        } catch (NoobException e) {
+            indentedReply(e.getMessage());
         }
-
-        if (i <= 0 || i > numItems) {
-            indentedReply("Task number " + i + " does not exist");
-            return;
-        }
-
-        Task task = memory.remove(i - 1);
-        numItems--;
-
-        String msg = "Noted. I've removed this task:\n";
-        String numTasks = String.format("Now you have %d tasks in the list.", numItems);
-
-        indentedReply(msg + "  " + task + "\n" + numTasks);
     }
 
     /**
@@ -234,60 +225,38 @@ public class Noob {
     /**
      * Marks task done or undone
      *
-     * @param taskNum 1-base indexed task number to mark as done or undone
+     * @param i 1-base indexed task number to mark as done or undone
      */
-    private void markTask(int taskNum, boolean markDone) {
-        int i = taskNum - 1;
+    private void markTask(int i, boolean isDone) {
+        try {
+            Task task = this.tasks.markTask(i, isDone);
 
-        if (i < 0 || i >= numItems) {
-            indentedReply("No task numbered " + taskNum);
-            return;
+            String msg = isDone
+                    ? "Nice! I've marked this task as done:\n"
+                    : "Ok, I've marked this task as not done yet\n";
+
+            indentedReply(msg + "  " + task);
+        } catch (NoobException e) {
+            indentedReply(e.getMessage());
         }
-
-        if (markDone) {
-            memory.get(i).markDone();
-        } else {
-            memory.get(i).unmarkDone();
-        }
-
-        String msg = markDone
-                ? "Nice! I've marked this task as done:\n"
-                : "Ok, I've marked this task as not done yet\n";
-
-        indentedReply(msg + "  " + memory.get(i));
     }
 
     /**
      * Displays a numbered list based on items in memory
      */
     private void displayList() {
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < memory.size(); i++) {
-            Task task = memory.get(i);
-
-            sb.append(i + 1);
-            sb.append(".");
-            sb.append(task).append("\n");
-        }
-
-        String reply = sb.isEmpty()
-                ? "No tasks to display"
-                : sb.toString().trim();
-
-        indentedReply(reply);
+        indentedReply(this.tasks.toString());
     }
 
     /**
-     * Saves input task to memory
+     * Adds task to TaskList
      *
-     * @param task Task to be added to memory
+     * @param task Task to be added to TaskList
      */
     private void addToList(Task task) {
-        memory.add(task);
-        numItems++;
+        int num = this.tasks.addTask(task);
         String s = "Got it. I've added this task:\n";
-        String numTasks = String.format("Now you have %d tasks in the list.", numItems);
+        String numTasks = String.format("Now you have %d tasks in the list.", num);
         indentedReply(s + "  " + task.toString() + "\n" + numTasks);
     }
 
