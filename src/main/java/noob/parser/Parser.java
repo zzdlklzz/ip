@@ -1,5 +1,6 @@
 package noob.parser;
 
+import noob.command.FindCommand;
 import noob.task.DeadlineTask;
 import noob.task.EventTask;
 import noob.exception.NoobException;
@@ -64,7 +65,22 @@ public class Parser {
             return new DeleteCommand(taskNum);
         }
 
+        if (trimmedInput.toLowerCase().startsWith("find")) {
+            String matcher = Parser.parseFindInput(trimmedInput);
+            return new FindCommand(matcher);
+        }
+
         throw new NoobException("Please input a valid command");
+    }
+
+    private static String parseFindInput(String input) throws NoobException {
+        String[] parsedInput = input.split("find");
+
+        if (parsedInput.length <= 1) {
+            throw new NoobException("Please enter a keyword to find");
+        }
+
+        return parsedInput[1].trim();
     }
 
     /**

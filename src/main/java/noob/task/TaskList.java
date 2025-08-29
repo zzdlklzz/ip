@@ -102,6 +102,22 @@ public class TaskList {
         return this.numTasks;
     }
 
+    /**
+     * Returns a list of tasks whose description contain the matching string
+     *
+     * @param matcher Search string to match task description
+     * @return Filtered list of tasks that have description matching input string
+     */
+    public TaskList filterTasks(String matcher) {
+        TaskList filteredTasks = new TaskList();
+        this.tasks.forEach(task -> {
+            if (task.getDesc().toLowerCase().contains(matcher.toLowerCase())) {
+                filteredTasks.addTask(task);
+            }
+        });
+        return filteredTasks;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
