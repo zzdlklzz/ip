@@ -68,7 +68,7 @@ public class Storage {
     /**
      * Writes input text to specified file path
      *
-     * @param text     Text to write to file path
+     * @param text Text to write to file path
      * @throws IOException If an error occurs on file writing
      */
     private void writeToFile(String text) throws IOException {
