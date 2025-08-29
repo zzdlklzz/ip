@@ -1,4 +1,4 @@
-package noob;
+package noob.task;
 
 public class TodoTask extends Task {
 

@@ -1,4 +1,4 @@
-package noob;
+package noob.task;
 
 public abstract class Task {
     private boolean isDone = false;

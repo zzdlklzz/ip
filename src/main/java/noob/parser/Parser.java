@@ -1,9 +1,9 @@
 package noob.parser;
 
-import noob.DeadlineTask;
-import noob.EventTask;
-import noob.NoobException;
-import noob.TodoTask;
+import noob.task.DeadlineTask;
+import noob.task.EventTask;
+import noob.exception.NoobException;
+import noob.task.TodoTask;
 import noob.command.AddCommand;
 import noob.command.Command;
 import noob.command.DeleteCommand;

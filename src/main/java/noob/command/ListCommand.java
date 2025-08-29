@@ -1,7 +1,7 @@
 package noob.command;
 
-import noob.Storage;
-import noob.TaskList;
+import noob.storage.Storage;
+import noob.task.TaskList;
 import noob.ui.Ui;
 
 public class ListCommand extends Command {

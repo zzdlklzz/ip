@@ -1,9 +1,9 @@
 package noob.command;
 
-import noob.NoobException;
-import noob.Storage;
-import noob.Task;
-import noob.TaskList;
+import noob.exception.NoobException;
+import noob.storage.Storage;
+import noob.task.Task;
+import noob.task.TaskList;
 import noob.ui.Ui;
 
 public class MarkCommand extends Command {
