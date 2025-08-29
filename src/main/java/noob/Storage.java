@@ -1,3 +1,5 @@
+package noob;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -5,7 +7,32 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class FileOperator {
+public class Storage {
+    private File file;
+    private String filePath;
+
+    public Storage(String filePath) throws NoobException {
+        this.filePath = filePath;
+        this.file = new File(filePath);
+        if (!file.exists()) {
+            this.initialiseStorageFile(file);
+        }
+    }
+
+    /**
+     * Creates file as specified by input
+     *
+     * @param file File object with defined file path
+     * @throws NoobException If IOException occurs on file creation
+     */
+    private void initialiseStorageFile(File file) throws NoobException {
+        file.getParentFile().mkdirs();
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            throw new NoobException("Error creating .txt file storage");
+        }
+    }
 
     /**
      * Reads the text contents of the specified file path and converts them to a string
@@ -30,12 +57,11 @@ public class FileOperator {
     /**
      * Writes input text to specified file path
      *
-     * @param filePath File path to write text to
      * @param text     Text to write to file path
      * @throws IOException If an error occurs on file writing
      */
-    private void writeToFile(String filePath, String text) throws IOException {
-        FileWriter fileWriter = new FileWriter(filePath);
+    private void writeToFile(String text) throws IOException {
+        FileWriter fileWriter = new FileWriter(this.filePath);
         fileWriter.write(text);
         fileWriter.close();
     }
@@ -43,14 +69,15 @@ public class FileOperator {
     /**
      * Takes a list of tasks and writes it into a specified file path
      *
-     * @param filePath File path to write to
      * @param tasks List of tasks to store
      * @throws NoobException If an error occurs on file writing
      */
-    public void writeTasksToFile(String filePath, ArrayList<Task> tasks) throws NoobException {
+    public void writeTasksToFile(TaskList tasks) throws NoobException {
         StringBuilder sb = new StringBuilder();
+        int n = tasks.getNumTasks();
 
-        for (Task task : tasks) {
+        for (int i = 1; i <= n; i++) {
+            Task task = tasks.getTask(i);
             String desc = task.getDesc();
             TaskType taskType = task.getType();
             int isDone = task.isDone() ? 1 : 0;
@@ -74,7 +101,7 @@ public class FileOperator {
         }
 
         try {
-            writeToFile(filePath, sb.toString().trim());
+            writeToFile(sb.toString().trim());
         } catch (IOException e) {
             throw new NoobException("Error writing tasks to file");
         }
@@ -82,13 +109,19 @@ public class FileOperator {
 
     /**
      * Gets a list of tasks based on the txt file specified
-     * @param filePath File path to parse tasks from
-     * @return List of tasks as parsed in the input file
+     *
+     * @return List of tasks as parsed in the storage file
      * @throws NoobException If file is not found or text formats are invalid
      */
-    public ArrayList<Task> getListOfTasks(String filePath) throws NoobException {
+    public ArrayList<Task> getListOfTasks() throws NoobException {
         try {
-            String text = readFileContents(filePath);
+            String text = readFileContents(this.filePath);
+
+            // .txt file was just created and is empty
+            if (text.isEmpty()) {
+                return new ArrayList<>();
+            }
+
             String[] taskStrings = text.split("\n");
             ArrayList<Task> tasks = new ArrayList<>();
 
