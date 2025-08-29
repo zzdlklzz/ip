@@ -31,4 +31,12 @@ public class AddCommand extends Command {
             ui.displayError(e);
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof AddCommand c) {
+            return this.task.equals(c.task);
+        }
+        return false;
+    }
 }
