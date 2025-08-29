@@ -15,6 +15,9 @@ import noob.task.TaskList;
 import noob.task.TaskType;
 import noob.task.TodoTask;
 
+/**
+ * Stores and retrieves the list of tasks in the specified file path
+ */
 public class Storage {
     private File file;
     private String filePath;

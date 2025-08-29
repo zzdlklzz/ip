@@ -11,8 +11,18 @@ import noob.command.ExitCommand;
 import noob.command.ListCommand;
 import noob.command.MarkCommand;
 
+/**
+ * Parses user inputs in the chatbot
+ */
 public class Parser {
 
+    /**
+     * Parses user commands and returns the corresponding Command object
+     *
+     * @param input Command typed by user
+     * @return The correct Command object as parsed from the input
+     * @throws NoobException If the input command is invalid
+     */
     public static Command parse(String input) throws NoobException {
         String trimmedInput = input.trim();
 
@@ -57,6 +67,13 @@ public class Parser {
         throw new NoobException("Please input a valid command");
     }
 
+    /**
+     * Parses the delete command
+     *
+     * @param input User command beginning with "delete"
+     * @return The task number to be deleted
+     * @throws NoobException If no valid task number if provided
+     */
     private static int parseDeleteInput(String input) throws NoobException {
         try {
             String[] parsedInput = input.split(" ");
@@ -71,6 +88,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses the mark command
+     *
+     * @param input User command beginning with "mark" or "unmark"
+     * @return The task number to be marked or unmarked
+     * @throws NoobException If no valid task number if provided
+     */
     private static int parseMarkInput(String input) throws NoobException {
         try {
             String[] parsedInput = input.split(" ");

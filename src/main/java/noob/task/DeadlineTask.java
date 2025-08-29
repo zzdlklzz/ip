@@ -6,6 +6,9 @@ import java.time.format.DateTimeParseException;
 
 import noob.exception.NoobException;
 
+/**
+ * A subclass of Task that represents tasks with a single deadline
+ */
 public class DeadlineTask extends Task {
 
     private LocalDate deadline;
@@ -19,10 +22,20 @@ public class DeadlineTask extends Task {
         }
     }
 
+    /**
+     * Formats the deadline into a string
+     *
+     * @return A string of the form "MMM d yyyy"
+     */
     public String getFormattedDeadline() {
         return this.deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
 
+    /**
+     * Formats the deadline into an ISO string
+     *
+     * @return An ISO string of the deadline
+     */
     public String getIsoDeadline() {
         return this.deadline.toString();
     }

@@ -2,6 +2,9 @@ package noob.ui;
 
 import noob.exception.NoobException;
 
+/**
+ * Class responsible for message responses to user input
+ */
 public class Ui {
     private String LINE_SPACING = "     ";
 
@@ -17,14 +20,29 @@ public class Ui {
         }
     }
 
+    /**
+     * Displays error message on initialization
+     *
+     * @param e NoobException thrown on initialization of the bot
+     */
     public void displayInitializationError(NoobException e) {
         System.out.println(e.getMessage() + "\n");
     }
 
+    /**
+     * Displays general error messages
+     *
+     * @param e NoobException thrown by commands
+     */
     public void displayError(NoobException e) {
         indentedReply(e.getMessage());
     }
 
+    /**
+     * Displays bot messages or replies to user input
+     *
+     * @param msg Message to be displayed
+     */
     public void displayMessage(String msg) {
         indentedReply(msg);
     }
