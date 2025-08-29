@@ -1,5 +1,8 @@
 package noob.task;
 
+/**
+ * A subclass of Task representing simple tasks with no deadlines or date fields
+ */
 public class TodoTask extends Task {
 
     public TodoTask(String text) {

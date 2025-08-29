@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import noob.exception.NoobException;
 import noob.storage.Storage;
 
+/**
+ * Stores a list of tasks
+ */
 public class TaskList {
     private ArrayList<Task> tasks;
     private int numTasks;

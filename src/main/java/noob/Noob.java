@@ -9,6 +9,7 @@ import noob.storage.Storage;
 import noob.task.TaskList;
 import noob.ui.Ui;
 
+/** Main chatbot class */
 public class Noob {
     private Storage storage;
     private Ui ui = new Ui();
