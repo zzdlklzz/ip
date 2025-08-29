@@ -15,4 +15,12 @@ public class TodoTask extends Task {
     public String toString() {
         return "[T]" + super.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof TodoTask t) {
+            return this.getDesc().equals(t.getDesc());
+        }
+        return false;
+    }
 }

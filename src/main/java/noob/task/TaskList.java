@@ -115,4 +115,22 @@ public class TaskList {
                 ? "No tasks to display"
                 : sb.toString().trim();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof TaskList taskList) {
+            try {
+                if (this.numTasks != taskList.numTasks) return false;
+                for (int i = 0; i < this.numTasks; i++) {
+                    if (!this.getTask(i).equals(taskList.getTask(i))) {
+                        return false;
+                    }
+                }
+                return true;
+            } catch (NoobException e) {
+                return false;
+            }
+        }
+        return false;
+    }
 }
