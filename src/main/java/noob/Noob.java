@@ -3,7 +3,10 @@ package noob;
 import java.util.Scanner;
 
 import noob.command.Command;
+import noob.exception.NoobException;
 import noob.parser.Parser;
+import noob.storage.Storage;
+import noob.task.TaskList;
 import noob.ui.Ui;
 
 public class Noob {

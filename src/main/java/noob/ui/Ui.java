@@ -1,6 +1,6 @@
 package noob.ui;
 
-import noob.NoobException;
+import noob.exception.NoobException;
 
 public class Ui {
     private String LINE_SPACING = "     ";

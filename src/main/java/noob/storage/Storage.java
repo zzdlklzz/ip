@@ -1,4 +1,4 @@
-package noob;
+package noob.storage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,6 +6,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import noob.exception.NoobException;
+import noob.task.DeadlineTask;
+import noob.task.EventTask;
+import noob.task.Task;
+import noob.task.TaskList;
+import noob.task.TaskType;
+import noob.task.TodoTask;
 
 public class Storage {
     private File file;

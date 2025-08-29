@@ -1,8 +1,10 @@
-package noob;
+package noob.task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import noob.exception.NoobException;
 
 public class EventTask extends Task {
 
