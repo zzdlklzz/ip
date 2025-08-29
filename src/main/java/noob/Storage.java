@@ -168,7 +168,7 @@ public class Storage {
         } catch (IllegalArgumentException e) {
             throw new NoobException("Invalid task types in txt file");
         } catch (IndexOutOfBoundsException e) {
-            throw new NoobException("noob.Task type and details mismatch");
+            throw new NoobException("Task type and details mismatch");
         }
     }
 }

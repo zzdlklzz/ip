@@ -17,24 +17,24 @@ public class TaskList {
     }
 
     /**
-     * Gets the specified task number from the noob.TaskList
+     * Gets the specified task number from the TaskList
      *
      * @param i 1-based index task number to be retrieved
-     * @return noob.Task numbered i
-     * @throws NoobException If input integer is out of range of the size of noob.TaskList
+     * @return Task numbered i
+     * @throws NoobException If input integer is out of range of the size of TaskList
      */
     public Task getTask(int i) throws NoobException {
         if (i <= 0 || i > numTasks) {
-            throw new NoobException("noob.Task number " + i + "does not exist");
+            throw new NoobException("Task number " + i + "does not exist");
         }
         return this.tasks.get(i - 1);
     }
 
     /**
-     * Adds input task to the noob.TaskList
+     * Adds input task to the TaskList
      *
-     * @param task noob.Task to be added to noob.TaskList
-     * @return The number of items in the noob.TaskList
+     * @param task Task to be added to TaskList
+     * @return The number of items in the TaskList
      */
     public int addTask(Task task) {
         this.tasks.add(task);
@@ -43,11 +43,11 @@ public class TaskList {
     }
 
     /**
-     * Deletes the specified task number from the noob.TaskList
+     * Deletes the specified task number from the TaskList
      *
      * @param i 1-based index task number to be deleted
-     * @return The deleted noob.Task
-     * @throws NoobException If input integer is out of range of the size of noob.TaskList
+     * @return The deleted Task
+     * @throws NoobException If input integer is out of range of the size of TaskList
      */
     public Task deleteTask(int i) throws NoobException {
         if (this.numTasks == 0) {
@@ -55,7 +55,7 @@ public class TaskList {
         }
 
         if (i <= 0 || i > this.numTasks) {
-            throw new NoobException("noob.Task number " + i + " does not exist");
+            throw new NoobException("Task number " + i + " does not exist");
         }
 
         Task task = this.tasks.remove(i - 1);
@@ -66,10 +66,10 @@ public class TaskList {
     /**
      * Marks the specified task as isDone
      *
-     * @param i noob.Task number to be marked
+     * @param i Task number to be marked
      * @param isDone True if task is to be marked as done, false otherwise
-     * @return noob.Task that is marked
-     * @throws NoobException If input integer is out of range of the size of noob.TaskList
+     * @return Task that is marked
+     * @throws NoobException If input integer is out of range of the size of TaskList
      */
     public Task markTask(int i, boolean isDone) throws NoobException {
         if (i <= 0 || i > this.numTasks) {
@@ -88,9 +88,9 @@ public class TaskList {
     }
 
     /**
-     * Gets the number of tasks in the noob.TaskList
+     * Gets the number of tasks in the TaskList
      *
-     * @return The number of tasks in the noob.TaskList
+     * @return The number of tasks in the TaskList
      */
     public int getNumTasks() {
         return this.numTasks;

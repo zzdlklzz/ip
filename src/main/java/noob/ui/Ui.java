@@ -33,7 +33,7 @@ public class Ui {
      * Greets the user upon bot start up
      */
     public void greet() {
-        System.out.println("Hello! I'm noob.Noob\nWhat can I do for you?");
+        System.out.println("Hello! I'm Noob\nWhat can I do for you?");
     }
 
     /**
