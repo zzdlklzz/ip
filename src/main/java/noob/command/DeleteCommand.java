@@ -31,4 +31,12 @@ public class DeleteCommand extends Command {
             ui.displayError(e);
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof DeleteCommand c) {
+            return this.taskNum == c.taskNum;
+        }
+        return false;
+    }
 }

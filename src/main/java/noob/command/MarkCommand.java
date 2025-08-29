@@ -34,4 +34,12 @@ public class MarkCommand extends Command {
             ui.displayError(e);
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof MarkCommand c) {
+            return this.taskNum == c.taskNum && this.isDone == c.isDone;
+        }
+        return false;
+    }
 }

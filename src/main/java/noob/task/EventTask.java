@@ -46,4 +46,12 @@ public class EventTask extends Task {
     public String toString() {
         return "[E]" + super.toString() + String.format(" (from: %s to: %s)", getFormattedFrom(), getFormattedTo());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof EventTask t) {
+            return this.from.equals(t.from) && this.to.equals(t.to) && this.getDesc().equals(t.getDesc());
+        }
+        return false;
+    }
 }
