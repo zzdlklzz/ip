@@ -1,0 +1,34 @@
+package noob.command;
+
+import noob.NoobException;
+import noob.Storage;
+import noob.Task;
+import noob.TaskList;
+import noob.ui.Ui;
+
+public class AddCommand extends Command {
+    private Task task;
+
+    public AddCommand(Task task) {
+        this.task = task;
+    }
+
+    @Override
+    public boolean isExit() {
+        return false;
+    }
+
+    @Override
+    public void execute(Storage storage, TaskList tasks, Ui ui) {
+        int num = tasks.addTask(task);
+        String s = "Got it. I've added this task:\n";
+        String numTasks = String.format("Now you have %d tasks in the list.", num);
+
+        try {
+            storage.writeTasksToFile(tasks);
+            ui.displayMessage(s + "  " + task.toString() + "\n" + numTasks);
+        } catch (NoobException e) {
+            ui.displayError(e);
+        }
+    }
+}
