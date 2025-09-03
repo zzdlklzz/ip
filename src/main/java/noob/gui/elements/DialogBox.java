@@ -18,6 +18,7 @@ public class DialogBox extends HBox {
         this.text.setWrapText(true);
         this.imageView.setFitWidth(100.0);
         this.imageView.setFitHeight(100.0);
+        this.imageView.setPreserveRatio(true);
         this.setAlignment(Pos.TOP_RIGHT);
 
         this.getChildren().addAll(this.text, this.imageView);
