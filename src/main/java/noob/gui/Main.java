@@ -7,14 +7,15 @@ import javafx.stage.Stage;
 import noob.Noob;
 import noob.gui.element.SendButton;
 import noob.gui.element.UserInput;
+import noob.gui.handler.DisplayHandler;
 import noob.gui.layout.DialogContainer;
 import noob.gui.layout.MainLayout;
 import noob.gui.layout.MainScrollPane;
 
 public class Main extends Application {
-    private static final int MAIN_LAYOUT_HEIGHT = 600;
-    private static final int MAIN_LAYOUT_WIDTH = 400;
-    private static final int MAIN_SCROLLPANE_HEIGHT = MAIN_LAYOUT_HEIGHT * 29 / 30;
+    private static final int MAIN_LAYOUT_HEIGHT = 800;
+    private static final int MAIN_LAYOUT_WIDTH = 600;
+    private static final int MAIN_SCROLLPANE_HEIGHT = MAIN_LAYOUT_HEIGHT * 9 / 10;
     private static final int MAIN_SCROLLPANE_WIDTH = MAIN_LAYOUT_WIDTH * 39 / 40;
     private static final int USER_INPUT_WIDTH = MAIN_LAYOUT_WIDTH * 13 / 16;
     private static final int SEND_BUTTON_WIDTH = MAIN_LAYOUT_WIDTH / 8;
@@ -50,8 +51,21 @@ public class Main extends Application {
         // Components styling
         setUpStage(stage);
         setUpComponents();
+
+        // Onboarding message
+        this.greet();
     }
 
+    /**
+     * Displays greeting message to user in GUI
+     */
+    private void greet() {
+        DisplayHandler.displayGreeting(dialogContainer, noob);
+    }
+
+    /**
+     * Styles the components in the GUI upon launch
+     */
     private void setUpComponents() {
         mainLayout.setStyle(MAIN_LAYOUT_WIDTH, MAIN_LAYOUT_HEIGHT);
         mainScrollPane.setStyle(MAIN_SCROLLPANE_WIDTH, MAIN_SCROLLPANE_HEIGHT);
@@ -66,6 +80,11 @@ public class Main extends Application {
         AnchorPane.setBottomAnchor(userInput, 1.0);
     }
 
+    /**
+     * Sets up the stage upon GUI launch
+     *
+     * @param stage Stage to be set
+     */
     private void setUpStage(Stage stage) {
         stage.setTitle("NoobBot");
         stage.setResizable(false);

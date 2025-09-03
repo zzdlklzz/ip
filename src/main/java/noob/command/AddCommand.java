@@ -19,16 +19,16 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public void execute(Storage storage, TaskList tasks, Ui ui) {
+    public String execute(Storage storage, TaskList tasks, Ui ui) {
         int num = tasks.addTask(task);
         String s = "Got it. I've added this task:\n";
         String numTasks = String.format("Now you have %d tasks in the list.", num);
 
         try {
             storage.writeTasksToFile(tasks);
-            ui.displayMessage(s + "  " + task.toString() + "\n" + numTasks);
+            return ui.displayMessage(s + "  " + task.toString() + "\n" + numTasks);
         } catch (NoobException e) {
-            ui.displayError(e);
+            return ui.displayError(e);
         }
     }
 

@@ -2,9 +2,12 @@ package noob.gui.element;
 
 import javafx.scene.control.Button;
 import noob.Noob;
-import noob.gui.handler.UserInputHandler;
+import noob.gui.handler.DisplayHandler;
 import noob.gui.layout.DialogContainer;
 
+/**
+ * Button to send user input to the chatbot
+ */
 public class SendButton extends Button {
     private DialogContainer dialogContainer;
     private UserInput userInput;
@@ -16,10 +19,15 @@ public class SendButton extends Button {
         this.userInput = u;
         this.noob = n;
         this.setOnMouseClicked((event -> {
-            UserInputHandler.handleInput(dialogContainer, userInput, noob);
+            DisplayHandler.handleInput(dialogContainer, userInput, noob);
         }));
     }
 
+    /**
+     * Sets styling of SendButton for GUI
+     *
+     * @param width Preferred button width
+     */
     public void setStyle(int width) {
         this.setPrefWidth(width);
     }

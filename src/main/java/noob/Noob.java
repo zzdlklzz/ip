@@ -64,6 +64,39 @@ public class Noob {
     }
 
     /**
+     * Gets the display message response based on user input in GUI
+     *
+     * @param userInput User's text field input
+     * @return Message to be displayed to user
+     */
+    public String getResponse(String userInput) {
+        try {
+            Command command = Parser.parse(userInput);
+            return command.execute(this.storage, this.tasks, this.ui);
+        } catch (NoobException e) {
+            return this.ui.displayError(e);
+        }
+    }
+
+    /**
+     * Greets the user upon GUI launch
+     *
+     * @return Greeting message
+     */
+    public String greetGui() {
+        return this.ui.greet();
+    }
+
+    /**
+     * Exits the GUI and displays message
+     *
+     * @return Exit message
+     */
+    public String exitGui() {
+        return this.ui.exit();
+    }
+
+    /**
      * Exits conversation and closes scanner
      */
     private void exit() {

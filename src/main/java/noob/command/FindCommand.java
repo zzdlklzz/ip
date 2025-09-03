@@ -17,11 +17,11 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public void execute(Storage storage, TaskList tasks, Ui ui) {
+    public String execute(Storage storage, TaskList tasks, Ui ui) {
         TaskList filteredTasks = tasks.filterTasks(this.matcher);
         String msg = filteredTasks.getNumTasks() == 0
                 ? String.format("No task matching \"%s\"", this.matcher)
                 : String.format("Here are the matching tasks in your list:\n%s", filteredTasks);
-        ui.displayMessage(msg);
+        return ui.displayMessage(msg);
     }
 }

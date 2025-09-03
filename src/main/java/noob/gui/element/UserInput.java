@@ -2,9 +2,12 @@ package noob.gui.element;
 
 import javafx.scene.control.TextField;
 import noob.Noob;
-import noob.gui.handler.UserInputHandler;
+import noob.gui.handler.DisplayHandler;
 import noob.gui.layout.DialogContainer;
 
+/**
+ * Text field for users to type commands
+ */
 public class UserInput extends TextField {
     private DialogContainer dialogContainer;
     private Noob noob;
@@ -13,10 +16,15 @@ public class UserInput extends TextField {
         this.dialogContainer = d;
         this.noob = n;
         this.setOnAction((event -> {
-            UserInputHandler.handleInput(dialogContainer, this, noob);
+            DisplayHandler.handleInput(dialogContainer, this, noob);
         }));
     }
 
+    /**
+     * Sets styling of UserInput for GUI
+     *
+     * @param width Preferred input width
+     */
     public void setStyle(int width) {
         this.setPrefWidth(width);
     }
