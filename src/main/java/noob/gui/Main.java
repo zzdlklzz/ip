@@ -1,83 +1,43 @@
 package noob.gui;
 
+import java.io.IOException;
+
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import noob.Noob;
-import noob.gui.element.SendButton;
-import noob.gui.element.UserInput;
-import noob.gui.handler.DisplayHandler;
-import noob.gui.layout.DialogContainer;
-import noob.gui.layout.MainLayout;
-import noob.gui.layout.MainScrollPane;
+import noob.gui.controller.MainWindow;
 
 public class Main extends Application {
     private static final int MAIN_LAYOUT_HEIGHT = 800;
     private static final int MAIN_LAYOUT_WIDTH = 600;
-    private static final int MAIN_SCROLLPANE_HEIGHT = MAIN_LAYOUT_HEIGHT * 9 / 10;
-    private static final int MAIN_SCROLLPANE_WIDTH = MAIN_LAYOUT_WIDTH * 39 / 40;
-    private static final int USER_INPUT_WIDTH = MAIN_LAYOUT_WIDTH * 13 / 16;
-    private static final int SEND_BUTTON_WIDTH = MAIN_LAYOUT_WIDTH / 8;
-
-    private MainScrollPane mainScrollPane;
-    private DialogContainer dialogContainer;
-    private UserInput userInput;
-    private SendButton sendButton;
-    private Scene scene;
-    private MainLayout mainLayout;
 
     private Noob noob = new Noob();
 
     @Override
     public void start(Stage stage) {
 
-        // Create components
-        mainScrollPane = new MainScrollPane();
-        dialogContainer = new DialogContainer();
-        mainScrollPane.setContent(dialogContainer);
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
+            AnchorPane ap = fxmlLoader.load();
+            Scene scene = new Scene(ap);
+            stage.setScene(scene);
 
-        userInput = new UserInput(dialogContainer, noob);
-        sendButton = new SendButton("Send", dialogContainer, userInput, noob);
+            // Initialization
+            MainWindow controller = fxmlLoader.getController();
+            controller.setNoob(noob);
+            controller.initializeComponentFields();
 
-        mainLayout = new MainLayout();
-        mainLayout.getChildren().addAll(mainScrollPane, userInput, sendButton);
+            stage.show();
+            setUpStage(stage);
 
-        scene = new Scene(mainLayout);
-
-        stage.setScene(scene);
-        stage.show();
-
-        // Components styling
-        setUpStage(stage);
-        setUpComponents();
-
-        // Onboarding message
-        this.greet();
-    }
-
-    /**
-     * Displays greeting message to user in GUI
-     */
-    private void greet() {
-        DisplayHandler.displayGreeting(dialogContainer, noob);
-    }
-
-    /**
-     * Styles the components in the GUI upon launch
-     */
-    private void setUpComponents() {
-        mainLayout.setStyle(MAIN_LAYOUT_WIDTH, MAIN_LAYOUT_HEIGHT);
-        mainScrollPane.setStyle(MAIN_SCROLLPANE_WIDTH, MAIN_SCROLLPANE_HEIGHT);
-        dialogContainer.setStyle(mainScrollPane);
-        userInput.setStyle(USER_INPUT_WIDTH);
-        sendButton.setStyle(SEND_BUTTON_WIDTH);
-
-        AnchorPane.setTopAnchor(mainScrollPane, 1.0);
-        AnchorPane.setBottomAnchor(sendButton, 1.0);
-        AnchorPane.setRightAnchor(sendButton, 1.0);
-        AnchorPane.setLeftAnchor(userInput, 1.0);
-        AnchorPane.setBottomAnchor(userInput, 1.0);
+            // Onboarding message
+            controller.greet();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

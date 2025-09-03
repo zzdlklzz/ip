@@ -13,8 +13,24 @@ public class SendButton extends Button {
     private UserInput userInput;
     private Noob noob;
 
+    public SendButton() {
+        super("Send");
+    }
+
     public SendButton(String label, DialogContainer d, UserInput u, Noob n) {
         super(label);
+        this.dialogContainer = d;
+        this.userInput = u;
+        this.noob = n;
+        this.setOnMouseClicked((event -> {
+            DisplayHandler.handleInput(dialogContainer, userInput, noob);
+        }));
+    }
+
+    /**
+     * Initialize fields when default constructor is called by FXML
+     */
+    public void initialize(DialogContainer d, UserInput u, Noob n) {
         this.dialogContainer = d;
         this.userInput = u;
         this.noob = n;
@@ -31,6 +47,4 @@ public class SendButton extends Button {
     public void setStyle(int width) {
         this.setPrefWidth(width);
     }
-
-
 }

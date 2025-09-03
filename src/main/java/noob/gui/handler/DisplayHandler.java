@@ -37,6 +37,7 @@ public class DisplayHandler {
                 DialogBox.getNoobDialogBox(noobMsgDisplay, new NoobImage()));
         userInput.clear();
 
+        // Exits after one second delay
         if (isExit(noobResponse)) {
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {

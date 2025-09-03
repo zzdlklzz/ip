@@ -1,33 +1,40 @@
 package noob.gui.element;
 
+import java.io.IOException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import noob.gui.controller.MainWindow;
 
 /**
  * Simple dialog box display
  */
 public class DialogBox extends HBox {
+    @FXML
     private Label text;
+    @FXML
     private ImageView imageView;
 
     private DialogBox(String text, Image image) {
-        this.text = new Label(text);
-        this.imageView = new ImageView(image);
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
+            fxmlLoader.setController(this);
+            fxmlLoader.setRoot(this);
+            fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        // Styling the dialog box
-        this.text.setWrapText(true);
-        this.imageView.setFitWidth(100.0);
-        this.imageView.setFitHeight(100.0);
-        this.imageView.setPreserveRatio(true);
-        this.setAlignment(Pos.TOP_RIGHT);
-
-        this.getChildren().addAll(this.text, this.imageView);
+        this.text.setText(text);
+        this.imageView.setImage(image);
     }
 
     /**

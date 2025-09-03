@@ -17,8 +17,6 @@ public class MainScrollPane extends ScrollPane {
         this.setPrefSize(width, height);
         this.setHbarPolicy(ScrollBarPolicy.NEVER);
         this.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-
-        this.setVvalue(1.0);
         this.setFitToWidth(true);
     }
 }
