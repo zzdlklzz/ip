@@ -1,4 +1,4 @@
-package noob.gui.elements;
+package noob.gui.element;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
