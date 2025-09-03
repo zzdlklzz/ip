@@ -13,6 +13,8 @@ import noob.ui.Ui;
  * Main chatbot class
  */
 public class Noob {
+    private static final String DEFAULT_FILE_PATH = "data/tasks-file.txt";
+
     private Storage storage;
     private Ui ui = new Ui();
     private TaskList tasks;
@@ -21,6 +23,16 @@ public class Noob {
     public Noob(String filePath) {
         try {
             this.storage = new Storage(filePath);
+            this.tasks = new TaskList(this.storage);
+        } catch (NoobException e) {
+            this.ui.displayInitializationError(e);
+            this.tasks = new TaskList();
+        }
+    }
+
+    public Noob() {
+        try {
+            this.storage = new Storage(DEFAULT_FILE_PATH);
             this.tasks = new TaskList(this.storage);
         } catch (NoobException e) {
             this.ui.displayInitializationError(e);
