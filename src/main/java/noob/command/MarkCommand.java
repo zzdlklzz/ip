@@ -21,7 +21,7 @@ public class MarkCommand extends Command {
     }
 
     @Override
-    public void execute(Storage storage, TaskList tasks, Ui ui) {
+    public String execute(Storage storage, TaskList tasks, Ui ui) {
         try {
             Task task = tasks.markTask(this.taskNum, isDone);
             storage.writeTasksToFile(tasks);
@@ -29,9 +29,9 @@ public class MarkCommand extends Command {
                     ? "Nice! I've marked this task as done:\n"
                     : "Ok, I've marked this task as not done yet\n";
 
-            ui.displayMessage(msg + "  " + task);
+            return ui.displayMessage(msg + "  " + task);
         } catch (NoobException e) {
-            ui.displayError(e);
+            return ui.displayError(e);
         }
     }
 

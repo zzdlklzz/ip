@@ -12,12 +12,14 @@ public class Ui {
      * Indents bot replies
      *
      * @param text Text to be indented
+     * @return The input string
      */
-    private void indentedReply(String text) {
+    private String indentedReply(String text) {
         String[] lineSplit = text.split("\n");
         for (String s : lineSplit) {
             System.out.println(LINE_SPACING + s);
         }
+        return text;
     }
 
     /**
@@ -33,31 +35,41 @@ public class Ui {
      * Displays general error messages
      *
      * @param e NoobException thrown by commands
+     * @return Error message
      */
-    public void displayError(NoobException e) {
-        indentedReply(e.getMessage());
+    public String displayError(NoobException e) {
+        return indentedReply(e.getMessage());
     }
 
     /**
      * Displays bot messages or replies to user input
      *
      * @param msg Message to be displayed
+     * @return Message
      */
-    public void displayMessage(String msg) {
-        indentedReply(msg);
+    public String displayMessage(String msg) {
+        return indentedReply(msg);
     }
 
     /**
      * Greets the user upon bot start up
+     *
+     * @return Greeting message
      */
-    public void greet() {
-        System.out.println("Hello! I'm Noob\nWhat can I do for you?");
+    public String greet() {
+        String msg = "Hello! I'm Noob\nWhat can I do for you?";
+        System.out.println(msg);
+        return msg;
     }
 
     /**
      * Exits conversation with a message
+     *
+     * @return Exit message
      */
-    public void exit() {
-        System.out.println("Bye. Hope to see you again soon!");
+    public String exit() {
+        String msg = "Bye. Hope to see you again soon!";
+        System.out.println(msg);
+        return msg;
     }
 }
