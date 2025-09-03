@@ -4,8 +4,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import noob.gui.elements.SendButton;
-import noob.gui.elements.UserInput;
+import noob.Noob;
+import noob.gui.element.SendButton;
+import noob.gui.element.UserInput;
 import noob.gui.layout.DialogContainer;
 import noob.gui.layout.MainLayout;
 import noob.gui.layout.MainScrollPane;
@@ -25,6 +26,8 @@ public class Main extends Application {
     private Scene scene;
     private MainLayout mainLayout;
 
+    private Noob noob = new Noob();
+
     @Override
     public void start(Stage stage) {
 
@@ -33,8 +36,8 @@ public class Main extends Application {
         dialogContainer = new DialogContainer();
         mainScrollPane.setContent(dialogContainer);
 
-        userInput = new UserInput();
-        sendButton = new SendButton("Send");
+        userInput = new UserInput(dialogContainer, noob);
+        sendButton = new SendButton("Send", dialogContainer, userInput, noob);
 
         mainLayout = new MainLayout();
         mainLayout.getChildren().addAll(mainScrollPane, userInput, sendButton);
