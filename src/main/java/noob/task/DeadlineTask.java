@@ -53,7 +53,9 @@ public class DeadlineTask extends Task {
     @Override
     public boolean equals(Object o) {
         if (o instanceof DeadlineTask t) {
-            return this.deadline.equals(t.deadline) && this.getDesc().equals(t.getDesc());
+            boolean deadlineEquals = this.deadline.equals(t.deadline);
+            boolean descEquals = this.getDesc().equals(t.getDesc());
+            return deadlineEquals && descEquals;
         }
         return false;
     }

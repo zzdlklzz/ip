@@ -73,7 +73,10 @@ public class EventTask extends Task {
     @Override
     public boolean equals(Object o) {
         if (o instanceof EventTask t) {
-            return this.from.equals(t.from) && this.to.equals(t.to) && this.getDesc().equals(t.getDesc());
+            boolean fromEquals = this.from.equals(t.from);
+            boolean toEquals = this.to.equals(t.to);
+            boolean descEquals = this.getDesc().equals(t.getDesc());
+            return fromEquals && toEquals && descEquals;
         }
         return false;
     }

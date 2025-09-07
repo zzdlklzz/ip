@@ -89,32 +89,41 @@ public class Storage {
 
         for (int i = 1; i <= n; i++) {
             Task task = tasks.getTask(i);
-            String desc = task.getDesc();
-            TaskType taskType = task.getType();
-            int isDone = task.isDone() ? 1 : 0;
-
-            switch (taskType) {
-            case TODO:
-                String todoStr = taskType + " | " + isDone + " | " + desc;
-                sb.append(todoStr).append("\n");
-                break;
-            case DEADLINE:
-                DeadlineTask deadlineTask = (DeadlineTask) task;
-                String deadlineStr = taskType + " | " + isDone + " | " + desc + " | " + deadlineTask.getIsoDeadline();
-                sb.append(deadlineStr).append("\n");
-                break;
-            case EVENT:
-                EventTask eventTask = (EventTask) task;
-                String eventStr = taskType + " | " + isDone + " | " + desc + " | " + eventTask.getIsoFrom()
-                        + " | " + eventTask.getIsoTo();
-                sb.append(eventStr).append("\n");
-            }
+            String taskString = formatTaskStringToTxt(task);
+            sb.append(taskString).append("\n");
         }
 
         try {
             writeToFile(sb.toString().trim());
         } catch (IOException e) {
             throw new NoobException("Error writing tasks to file");
+        }
+    }
+
+    /**
+     * Formats a given task to a string to be stored in a line in the storage txt file
+     *
+     * @param task Input task to be formatted
+     * @return Formatted string representation of a task's status in the storage txt file
+     * @throws NoobException If the task type is invalid
+     */
+    private String formatTaskStringToTxt(Task task) throws NoobException {
+        TaskType taskType = task.getType();
+        String desc = task.getDesc();
+        int isDone = task.isDone() ? 1 : 0;
+
+        switch (taskType) {
+        case TODO:
+            return taskType + " | " + isDone + " | " + desc;
+        case DEADLINE:
+            DeadlineTask deadlineTask = (DeadlineTask) task;
+            return taskType + " | " + isDone + " | " + desc + " | " + deadlineTask.getIsoDeadline();
+        case EVENT:
+            EventTask eventTask = (EventTask) task;
+            return taskType + " | " + isDone + " | " + desc + " | " + eventTask.getIsoFrom()
+                    + " | " + eventTask.getIsoTo();
+        default:
+            throw new NoobException("Unknown task type");
         }
     }
 
