@@ -1,6 +1,7 @@
 package noob.task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import noob.exception.NoobException;
 import noob.storage.Storage;
@@ -15,6 +16,11 @@ public class TaskList {
     public TaskList() {
         this.tasks = new ArrayList<>();
         this.numTasks = 0;
+    }
+
+    private TaskList(List<Task> tasks) {
+        this.tasks = new ArrayList<>(tasks);
+        this.numTasks = tasks.size();
     }
 
     public TaskList(Storage storage) throws NoobException {
@@ -111,13 +117,9 @@ public class TaskList {
      * @return Filtered list of tasks that have description matching input string
      */
     public TaskList filterTasks(String matcher) {
-        TaskList filteredTasks = new TaskList();
-        this.tasks.forEach(task -> {
-            if (task.getDesc().toLowerCase().contains(matcher.toLowerCase())) {
-                filteredTasks.addTask(task);
-            }
-        });
-        return filteredTasks;
+        return new TaskList(this.tasks
+                .stream()
+                .filter(task -> task.getDesc().toLowerCase().contains(matcher.toLowerCase())).toList());
     }
 
     @Override
