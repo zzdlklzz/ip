@@ -5,6 +5,7 @@ import noob.command.Command;
 import noob.command.DeleteCommand;
 import noob.command.ExitCommand;
 import noob.command.FindCommand;
+import noob.command.HelpCommand;
 import noob.command.ListCommand;
 import noob.command.MarkCommand;
 import noob.exception.NoobException;
@@ -68,6 +69,10 @@ public class Parser {
         if (trimmedInput.toLowerCase().startsWith("find")) {
             String matcher = Parser.parseFindInput(trimmedInput);
             return new FindCommand(matcher);
+        }
+
+        if (trimmedInput.equalsIgnoreCase("help")) {
+            return new HelpCommand();
         }
 
         throw new NoobException("Please input a valid command");
