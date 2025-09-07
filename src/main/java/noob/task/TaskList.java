@@ -86,8 +86,10 @@ public class TaskList {
 
         if (isDone) {
             task.markDone();
+            assert task.isDone() : "Failed to mark task as done";
         } else {
             task.unmarkDone();
+            assert !task.isDone() : "Failed to mark task as undone";
         }
 
         return task;

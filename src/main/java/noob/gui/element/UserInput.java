@@ -28,6 +28,10 @@ public class UserInput extends TextField {
     public void initialize(DialogContainer d, Noob n) {
         this.dialogContainer = d;
         this.noob = n;
+
+        assert dialogContainer != null : "DialogContainer cannot be null";
+        assert noob != null : "Noob cannot be null";
+
         this.setOnAction((event -> {
             DisplayHandler.handleInput(dialogContainer, this, noob);
         }));

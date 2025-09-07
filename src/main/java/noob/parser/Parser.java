@@ -80,7 +80,10 @@ public class Parser {
             throw new NoobException("Please enter a keyword to find");
         }
 
-        return parsedInput[1].trim();
+        String matcher = parsedInput[1].trim();
+        assert !matcher.isEmpty() : "Empty keyword search for find command";
+
+        return matcher;
     }
 
     /**
@@ -139,6 +142,7 @@ public class Parser {
         }
 
         String desc = parsedInput[1].trim();
+        assert !desc.isEmpty() : "Task description for todo is empty";
 
         return new TodoTask(desc);
     }

@@ -34,6 +34,11 @@ public class SendButton extends Button {
         this.dialogContainer = d;
         this.userInput = u;
         this.noob = n;
+
+        assert dialogContainer != null : "DialogContainer cannot be null";
+        assert userInput != null : "UserInput cannot be null";
+        assert noob != null : "Noob cannot be null";
+
         this.setOnMouseClicked((event -> {
             DisplayHandler.handleInput(dialogContainer, userInput, noob);
         }));
