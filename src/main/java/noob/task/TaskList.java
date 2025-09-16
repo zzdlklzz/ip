@@ -18,7 +18,7 @@ public class TaskList {
         this.numTasks = 0;
     }
 
-    private TaskList(List<Task> tasks) {
+    public TaskList(List<Task> tasks) {
         this.tasks = new ArrayList<>(tasks);
         this.numTasks = tasks.size();
     }
