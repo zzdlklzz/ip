@@ -43,7 +43,7 @@ test {
 }
 
 application {
-    mainClass.set("noob.gui.Main")
+    mainClass.set("noob.gui.Launcher")
 }
 
 shadowJar {
